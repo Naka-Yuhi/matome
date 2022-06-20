@@ -131,3 +131,5 @@ dmypy.json
 # matome
 /image/
 py_data/
+
+*.pdf

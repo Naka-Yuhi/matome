@@ -285,6 +285,11 @@ def readyaml(path):
 		up_to_date = False
 		#print("ok2")
 
+	#comment is empty
+	if config['condition']['description'] is None:
+		config_comment = "no comment"
+	else:
+		config_comment = config['condition']['description']
 
 	start_time = config['condition']['date']['start'].strftime('%Y/%m/%d')
 	end_time = config['condition']['date']['end'].strftime('%Y/%m/%d')
@@ -298,7 +303,7 @@ def readyaml(path):
 	print('切り込み深さ：' + str(config['condition']['ap']) + 'mm')
 	print('加工時間：' + str( config['condition']['machining_time'] ) + 'h')
 	print('加工のパターン：' + config['condition']['process_type'])
-	print('コメント：' + config['condition']['description'])
+	print('コメント：' + config_comment)
 
 	#if yaml file is not up_to_date, the following code will be carryed out
 	if not up_to_date:
