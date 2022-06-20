@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # matome
-image/
+/image/
 py_data/
