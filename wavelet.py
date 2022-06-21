@@ -41,7 +41,15 @@ else:
 
 
 
+print("-----------------------------------")
+print("~~~~~  Machining Conditions  ~~~~~~~~")
+ngi.readyaml(par_dir)
 
+
+print("~~~~~  Wavelet Transform Part  ~~~~~~~~")
+print("Output Type    : %s" % result_type)
+print("Mother Wavelets: %s" % wavelet_type)
+print("-----------------------------------")
 
 if result_type == 'log':
     dir = './image/wavelet/accomp_len/' + result_type + '/' + wavelet_type
