@@ -24,10 +24,10 @@ for each_data in all_data:
     size_data = data.shape[0]
     sp_mean = np.mean(data[:,7],axis=0)
 
-    line1, = ax.plot(data[:,0]*60,data[:,7],color='b',zorder=0)
+    line1, = ax.plot(data[:,0],data[:,7],color='b',zorder=0)
     
     
-    sp_means.append([data[size_data//2,0]*60,sp_mean])
+    sp_means.append([data[size_data//2,0],sp_mean])
 
 
 
@@ -38,10 +38,10 @@ line2, = ax2.plot(sp_means[:,0],sp_means[:,1],'.r-',zorder=1)
 ax2.set_ylabel("Average SP current",fontsize=18)
 ax2.set_ylim(1550,1800)
 
-ax.set_xlabel("Time $t$ [min]",fontsize=18)
+ax.set_xlabel("Time $t$ [h]",fontsize=18)
 ax.set_ylabel("SP current",fontsize=18)
 ax.set_ylim(1400,2000)
-ax.set_xlim(0,each_data[-1,0]*60)
+ax.set_xlim(0,each_data[-1,0])
 
 ax.legend([line1,line2],["SP current", "Average SP current"])
 
