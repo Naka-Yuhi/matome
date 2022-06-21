@@ -47,9 +47,9 @@ for i,data in enumerate(data_list,1):
     ############  to display lenght  #####################
     ax.plot(length[:,0],length[:,2],color='b',zorder=0.1)
     ax.scatter(length[i,0],length[i,2],color='r',zorder=1,s=25)
-    ax.set_xlabel("Time t[h]",fontsize=16)
-    ax.set_ylabel("Variations of tool length [μm]",fontsize=16)
-    ax.set_ylim(-80,0)
+    ax.set_xlabel("Time $t$ [h]",fontsize=14)
+    ax.set_ylabel("Variations of tool length [$μm$]",fontsize=14)
+    ax.set_ylim(-80,10)
     ax.set_xlim(0,5)
     ######################################################
     
@@ -79,9 +79,9 @@ for i,data in enumerate(data_list,1):
         
         #mapper = ar[counter].pcolormesh(t,freq,np.abs(coef),cmap='jet')
         ax.set_yscale('log')
-        ax.set_ylabel("Frequency f[Hz]",fontsize=16)
-        ax.set_xlabel("Time t[s]",fontsize=16)
-        ax.set_title(dirtitle[j],fontsize=18)
+        ax.set_ylabel("Frequency $f$ [$Hz$]",fontsize=14)
+        ax.set_xlabel("Time $t$ [$s$]",fontsize=14)
+        ax.set_title(dirtitle[j],fontsize=20)
 
         pp = fig.colorbar(mapper,ax=ax, orientation="vertical")
         del coef,freq
