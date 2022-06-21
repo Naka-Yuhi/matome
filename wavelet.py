@@ -14,13 +14,14 @@ import gc
 from tqdm.notebook import trange
 
 result_type = 'power'
+wavelet_type = 'cmor1.5-1.0'
 
 if result_type == 'log':
-    dir = './image/wavelet/accomp_len/' + result_type
+    dir = './image/wavelet/accomp_len/' + result_type + '/' + wavelet_type
     lim_max = [6,5,3]
     lim_min = [-6,-6,-6]
 elif result_type == 'power':
-    dir = './image/wavelet/accomp_len/' + result_type
+    dir = './image/wavelet/accomp_len/' + result_type + '/' + wavelet_type
     lim_max = [5,4,2]
     lim_min = [0,0,0]
 
@@ -54,7 +55,7 @@ for i,data in enumerate(data_list,1):
     ######################################################
     
     t = np.arange(data.shape[0])*1/80000
-    wavelet_type = 'cmor1.5-1.0'
+    
 
 
     scale = np.arange(8,200)

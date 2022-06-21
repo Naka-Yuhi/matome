@@ -5,13 +5,14 @@ import matplotlib.pyplot as plt
 import sys,time
 
 par_dir = os.path.abspath(os.path.join( os.pardir ))
-all_data, length,_ = ngi.readtxt(par_dir)
+all_data, length,_ = ngi.readtxt2(par_dir,data_offset=10)
 
 fig = plt.figure(0,figsize=(10,4),dpi=150)
 ax = fig.subplots(1,1)
 
 print(len(all_data))
 sp_means = []
+
 
 
 if not os.path.isdir("./image/current/"):
@@ -37,7 +38,7 @@ line2, = ax2.plot(sp_means[:,0],sp_means[:,1],'.r-',zorder=1)
 ax2.set_ylabel("Average SP current",fontsize=18)
 ax2.set_ylim(1550,1800)
 
-ax.set_xlabel("Time t[min]",fontsize=18)
+ax.set_xlabel("Time $t$ [min]",fontsize=18)
 ax.set_ylabel("SP current",fontsize=18)
 ax.set_ylim(1400,2000)
 ax.set_xlim(0,each_data[-1,0]*60)
