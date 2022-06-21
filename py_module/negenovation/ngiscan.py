@@ -106,6 +106,8 @@ def readtxt2(path,fileform='data',data_offset=5,return_type='each'):
 	
 	length = []
 	time_len = []
+
+	start_end_index = []
 	
 	
 	indx_start = 0
@@ -136,13 +138,18 @@ def readtxt2(path,fileform='data',data_offset=5,return_type='each'):
 			
 			indx_end += data_np.shape[0]
 
+			start_end_index.append([indx_start,indx_end])
+
 			time = np.arange(indx_start,indx_end)*0.25/3600
 
 
 			if counter_base == 0:
 				time_len.append(0)
 			else:
-				time_len.append(time[-1])
+				#indx_start,indx_endを使用して時間を作成した場合、ずれが生じるため
+				#The time was newly defined for tool length.
+				time_len_arr = np.arange( start_end_index[counter_base-1][0],start_end_index[counter_base-1][1] )*0.25/3600
+				time_len.append(time_len_arr[-1])
 			
 
 

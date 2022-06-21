@@ -14,7 +14,7 @@ import py_module.negenovation as ngi
 #				myFFT
 #
 #############################################################################
-def myFFT(data,T,split_rate=0.05,overrap=0.5,window_F="hanning"):
+def myFFT(data,T,split_rate=0.05,overrap=0.5,window_F="hanning",output='power'):
 	"""
 	
 	
@@ -67,10 +67,19 @@ def myFFT(data,T,split_rate=0.05,overrap=0.5,window_F="hanning"):
 		print("Hanning window function is used.")
 		window = np.hanning(N)		  # ハニング窓
 
+	
 
 	for i, data_each in enumerate(data_split):
 		data_applied_window = data_each*window
-		results_FFT[:,i] = np.abs(  (2/N)*np.fft.fft(data_applied_window)  )
+
+		if output == 'power':
+			each_fft_result = ( np.abs(  (2/N)*np.fft.fft(data_applied_window)  ))**2
+		elif output == 'amp':
+			each_fft_result = np.abs(  (2/N)*np.fft.fft(data_applied_window)  )
+		else:
+			each_fft_result = ( np.abs(  (2/N)*np.fft.fft(data_applied_window)  ) )**2
+			print()
+		results_FFT[:,i] = each_fft_result
 		#results_FFT[:,i] = (2/N)*np.abs(  np.fft.fft(data_applied_window)  )
 		
 		
