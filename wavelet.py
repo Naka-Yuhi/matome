@@ -11,10 +11,37 @@ _, length,_ = ngi.readtxt(par_dir)
 ####### Wavelet transform ##################
 import pywt
 import gc
-from tqdm.notebook import trange
+import sys
 
-result_type = 'power'
-wavelet_type = 'cmor1.5-1.0'
+sys_args = sys.argv
+
+
+if len(sys_args) == 2:
+    if not ( sys_args[1] == 'power' or sys_args[1] == 'log'):
+        raise ValueError("the second argument must be 'power' or 'log'.")
+        sys.exit()
+    result_type = sys_args[1]
+    wavelet_type = 'cmor1.5-1.0'
+
+elif len(sys_args) == 3:
+    if not ( sys_args[1] == 'power' or sys_args[1] == 'log'):
+        raise ValueError("the second argument must be 'power' or 'log'.")
+        sys.exit()
+    try:
+        B_value = float(sys_args[2])
+    except ValueError as e:
+        print(e)
+        sys.exit()
+    
+    result_type = sys_args[1]
+    wavelet_type = 'cmor' + str(B_value) + '-1.0'
+else:
+    result_type = 'power'
+    wavelet_type = 'cmor1.5-1.0'
+
+
+
+
 
 if result_type == 'log':
     dir = './image/wavelet/accomp_len/' + result_type + '/' + wavelet_type
