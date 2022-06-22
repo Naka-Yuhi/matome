@@ -300,8 +300,8 @@ def readyaml(path):
 	else:
 		config_comment = config['condition']['description']
 
-	start_time = config['condition']['date']['start'].strftime('%Y/%m/%d')
-	end_time = config['condition']['date']['end'].strftime('%Y/%m/%d')
+	start_time = config['condition']['date']['start'].strftime('%Y/%m/%d (%a)')
+	end_time = config['condition']['date']['end'].strftime('%Y/%m/%d (%a)')
 	print(config['condition']['Nnumber'])
 	print("================================")
 	print('加工開始日：' + start_time)
