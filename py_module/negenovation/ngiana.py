@@ -89,7 +89,7 @@ def myFFT(data,T,split_rate=0.05,overrap=0.5,window_F="hanning",output='power'):
 def getFFTMap( data_list,T,time):
 	data_size = len(data_list)
 
-	for i in progress_bar(range(data_size)):
+	for i in tqdm(range(data_size)):
 		acc_data = data_list[i]
 
 		fft_x = myFFT(acc_data[:,0],T)
