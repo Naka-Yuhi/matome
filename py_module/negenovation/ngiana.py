@@ -1,13 +1,4 @@
-import os
-import glob
-import pickle
 import numpy as np
-import copy
-from natsort import natsorted
-import tqdm
-
-import py_module.negenovation as ngi
-
 
 #############################################################################
 #
@@ -198,7 +189,3 @@ def getPeak(data,range_list,sort_index=1,picked_data=20,pattern='max'):
 	#print(extracted_index)
 	
 	return data_return
-
-
-def moduletest():
-	ngi.testcall()
