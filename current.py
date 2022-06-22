@@ -4,6 +4,52 @@ import os
 import matplotlib.pyplot as plt
 import sys,time
 
+
+sys_args = sys.argv
+
+axis_max = 1800
+axis_min = 1550
+axix_time = "h"
+
+for i,arg in enumerate(sys_args):
+    #the first argument is file name, so it will not be adoptted.
+    if i==0:
+        continue
+
+    print(arg)
+    if not "=" in arg:
+        raise ValueError("the option format must be 'key'='value'.")
+        sys.exit()
+    
+    option = arg.split('=')
+    
+    
+    if option[0] == 'max':
+        try:
+            value = float(option[1])
+        except ValueError as e:
+            print("value must be the number")
+            sys.exit()
+        axis_max = value
+    elif option[0] == 'min':
+        try:
+            value = float(option[1])
+        except ValueError as e:
+            print("value must be the number")
+            sys.exit()
+        axis_min = value
+    elif option[0] == 'time':
+        value = option[1]
+        if not ( value == 'h' or value == 'min'):
+            raise ValueError("the value in option of time must be h or min.")
+            sys.exit()
+    else:
+        raise ValueError("the option must be min,max,time")
+        sys.exit()
+
+
+
+
 par_dir = os.path.abspath(os.path.join( os.pardir ))
 all_data, length,_ = ngi.readtxt2(par_dir,data_offset=10)
 
@@ -36,7 +82,7 @@ sp_means = np.array(sp_means)
 ax2 = ax.twinx()
 line2, = ax2.plot(sp_means[:,0],sp_means[:,1],'.r-',zorder=1)
 ax2.set_ylabel("Average SP current",fontsize=18)
-ax2.set_ylim(1550,1800)
+ax2.set_ylim(axis_min,axis_max)
 
 ax.set_xlabel("Time $t$ [h]",fontsize=18)
 ax.set_ylabel("SP current",fontsize=18)
