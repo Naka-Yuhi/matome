@@ -1,4 +1,13 @@
+import os
+import glob
+import pickle
 import numpy as np
+import copy
+from natsort import natsorted
+import tqdm
+
+import py_module.negenovation as ngi
+
 
 #############################################################################
 #
@@ -60,8 +69,7 @@ def myFFT(data,T,split_rate=0.05,overrap=0.5,window_F="hanning",output='power'):
 
 	
 
-	for i in range(len(data_split)):
-		data_each = data_split[i]
+	for i, data_each in enumerate(data_split):
 		data_applied_window = data_each*window
 
 		if output == 'power':
@@ -89,7 +97,7 @@ def myFFT(data,T,split_rate=0.05,overrap=0.5,window_F="hanning",output='power'):
 def getFFTMap( data_list,T,time):
 	data_size = len(data_list)
 
-	for i in range(data_size):
+	for i in tqdm.tqdm(range(data_size)):
 		acc_data = data_list[i]
 
 		fft_x = myFFT(acc_data[:,0],T)
@@ -190,3 +198,7 @@ def getPeak(data,range_list,sort_index=1,picked_data=20,pattern='max'):
 	#print(extracted_index)
 	
 	return data_return
+
+
+def moduletest():
+	ngi.testcall()
