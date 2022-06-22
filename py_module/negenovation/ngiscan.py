@@ -9,6 +9,7 @@ import gc
 import yaml
 import datetime
 
+
 def readtxt(path,fileform='data',flag_deb=0,allocation_size=100000,type_data='each'):
 	""" ==  readtxt  ==========
 	
@@ -96,8 +97,9 @@ def readtxt2(path,fileform='data',data_offset=5,return_type='each'):
 	""" ==  readtxt  ==========
 	
 	"""
-
+	########################################################
 	folders = __findpath(path,fileform,'txt')
+	########################################################
 
 	if len(folders) == 0:
 		return (None,None,None)
@@ -338,6 +340,7 @@ def __sortdata(data):
 			z_posi += 1
 
 	return data[:,indx_sort]
+
 
 def __findpath(path,fileform,filetype):
 	
