@@ -51,7 +51,7 @@ for i,arg in enumerate(sys_args):
 
 
 par_dir = os.path.abspath(os.path.join( os.pardir ))
-all_data, length,_ = ngi.readtxt2(par_dir,data_offset=10)
+all_data, length,fig_title = ngi.readtxt2(par_dir,data_offset=10)
 
 fig = plt.figure(0,figsize=(10,4),dpi=150)
 ax = fig.subplots(1,1)
@@ -76,20 +76,35 @@ for each_data in all_data:
     sp_means.append([data[size_data//2,0],sp_mean])
 
 
+axis1_max = 2000
+axis1_min = 1300
 
 sp_means = np.array(sp_means)
 
 ax2 = ax.twinx()
-line2, = ax2.plot(sp_means[:,0],sp_means[:,1],'.r-',zorder=1)
+line2, = ax2.plot(sp_means[:,0],sp_means[:,1],'.r-',zorder=0.5)
+
+for i,change_time_str in enumerate(fig_title):
+    if i == 0 or i == len(fig_title)-1:
+        continue
+
+    change_time_str = change_time_str.split("h")
+    change_time = float(change_time_str[0])
+    
+    line3, = ax.plot([change_time,change_time],[axis1_min,axis1_max],'c--',zorder=1)
+
+
+
+
 ax2.set_ylabel("Average SP current",fontsize=18)
 ax2.set_ylim(axis_min,axis_max)
 
 ax.set_xlabel("Time $t$ [h]",fontsize=18)
 ax.set_ylabel("SP current",fontsize=18)
-ax.set_ylim(1400,2000)
+ax.set_ylim(axis1_min,axis1_max)
 ax.set_xlim(0,each_data[-1,0])
 
-ax.legend([line1,line2],["SP current", "Average SP current"])
+ax.legend([line1,line2,line3],["SP current", "Average SP current","The point exchanging a workpiece"])
 
 
 
