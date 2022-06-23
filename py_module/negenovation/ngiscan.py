@@ -118,8 +118,10 @@ def readtxt2(path,fileform='data',data_offset=5,return_type='each'):
 	
 	fig_title = ["0h"]
 	new_all_data = []
-		
+	print(fig_title[-1],end="->")
+
 	for data_folder in folders:
+		
 		files_txt = natsorted(glob.glob(  os.path.join( data_folder, fileform + "*" + '.txt')   ))
 		# reading all the files
 		#length : tool length
@@ -169,8 +171,10 @@ def readtxt2(path,fileform='data',data_offset=5,return_type='each'):
 			counter_base += 1
 
 			indx_start = indx_end
-			
-	fig_title.append( str( round(time_len[-1],1) ) + "h" )
+		
+		fig_title.append( str( round(time_len[-1],1) ) + "h" )
+		print(fig_title[-1],end="->")
+	print("END")
 	
 	
 	new_length = np.vstack([np.array(time_len), np.array(length),np.array(length) - np.array(length)[0]]).T
