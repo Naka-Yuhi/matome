@@ -8,6 +8,7 @@ from tqdm.notebook import trange
 import gc
 import yaml
 import datetime
+import traceback
 
 
 def readtxt(path,fileform='data',flag_deb=0,allocation_size=100000,type_data='each'):
