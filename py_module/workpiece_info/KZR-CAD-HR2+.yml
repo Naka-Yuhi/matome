@@ -1,0 +1,13 @@
+product_name: KZR-CAD-HR2+
+type: hybrid-resin
+constituent_material: 
+  - SiO2-ZrO2-Al2O3複合酸化物
+  - フッ素徐放ガラスフィラー
+  - シリカ球形ナノフィラー
+  - UDMA
+hardness: 
+flexural_strength:
+  biaxial: 280
+  three-point: 
+reference: 
+  - https://kdu.repo.nii.ac.jp/?action=repository_uri&item_id=1259&file_id=22&file_no=1

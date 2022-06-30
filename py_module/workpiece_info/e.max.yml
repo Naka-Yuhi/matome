@@ -1,0 +1,10 @@
+product_name: e.max
+type: Glass-ceramics
+constituent_material: 
+  - 二ケイ酸リチウム
+hardness: 
+flexural_strength: 
+  biaxial: 
+  three-point: 400
+reference: 
+  - no reference

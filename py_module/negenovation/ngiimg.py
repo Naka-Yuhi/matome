@@ -124,6 +124,7 @@ def getIMG(path):
 	
 def show_pattern_img(config):
 	pattern = config['condition']['process_type']
+	workpiece_type = config['workpiece']['product_name']
 
 	try:
 		process_type = ProcessType(pattern)
@@ -135,6 +136,7 @@ def show_pattern_img(config):
 	filename = process_type_str[1] + ".jpg"
 
 	pattern_img = Image.open("./py_module/image/machining_pattern/" + filename )
-	show_images([pattern_img],"Pattern",1)
+	workpiece_img = Image.open("./py_module/image/workpiece/" + workpiece_type + ".jpg")
+	show_images([workpiece_img,pattern_img],["Workpiece","Pattern"],2)
 
 	

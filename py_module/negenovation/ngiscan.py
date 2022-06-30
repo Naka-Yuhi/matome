@@ -9,9 +9,10 @@ import gc
 import yaml
 import datetime
 import traceback
+import sys
 
 
-def readtxt(path,fileform='data',flag_deb=0,allocation_size=100000,type_data='each'):
+def readtxt(path,fileform='data',time_span=9.7):
 	""" ==  readtxt  ==========
 	
 	"""
@@ -25,74 +26,42 @@ def readtxt(path,fileform='data',flag_deb=0,allocation_size=100000,type_data='ea
 	
 	length = []
 	time_len = []
-	
-	
-	indx_start = 0
-	indx_end = 0
+	all_datas = np.zeros((100000,8))
 	counter_base = 0
-	
+
 	fig_title = ["0h"]
-	
-	if flag_deb == 1: print(folders)
 		
 	for data_folder in folders:
 		files_txt = natsorted(glob.glob(  os.path.join( data_folder, fileform + "*" + '.txt')   ))
-		# reading all the files
-		#length : tool length
-		#time_len : time for tool length
-		#data_np
-		
-		
+
 		#print("---------------------------")
 		#print(data_folder)
-		for i,file in enumerate(files_txt):
-		
+		for i,file_name in enumerate(files_txt):
 			
-			f = open(file,'r',encoding="utf-8")
+			f = open(file_name,'r',encoding="utf-8")
 			f.readline()[:-1]
 			length.append( int( f.readline()[:-1] )/10000 )
 			f.close()
-			data_np = np.loadtxt(file,delimiter=',',skiprows=2)
-			
-			indx_end += data_np.shape[0]
-			
-			
+
+			data_np = np.loadtxt(file_name,delimiter=',',skiprows=2)
+
+			#print(np.mean(data_np,axis=0))
 			#the first tool length is decided to be 0
-			if counter_base == 0:
-				time_len.append(0)
-				
-				if type_data == 'each':
-					new_all_data = []
-				elif type_data == 'combine':
-					all_data = np.zeros([allocation_size,data_np.shape[1]+1])
-			else:
-				###
-				time_len.append( time_len[counter_base-1] + data_np.shape[0]*0.25/3600 )
 			
-			if type_data == 'each':
-				time = np.arange(indx_start,indx_end)*0.25/3600
-				new_all_data.append(   np.hstack( (time.reshape(time.shape[0],1) ,data_np) ) )
-			elif type_data == 'combine':		
-				all_data[indx_start:indx_end,1:] = data_np
-				all_data[indx_start:indx_end,0] = np.arange(indx_start,indx_end)*0.25/3600
-			#print("S: %d, E: %d" % (indx_start, indx_end ) )
-			
-			indx_start = indx_end
+			time_len.append( (counter_base*time_span) )
+			all_datas[counter_base,1:8] = np.mean(data_np,axis=0)
+			all_datas[counter_base,0] = ( ((counter_base+1)*time_span) - time_span/2 )/60 
 			
 			counter_base += 1
 
-		fig_title.append( str( round(time_len[-1],1) ) + "h" )
-
-	if type_data == 'combine':
-		#adjustment of all_data
-		logi = all_data[:,4] != 0
-		new_all_data = all_data[logi,:]
+		fig_title.append( str( round(time_len[-1]/60,1) ) + "h" )
 	
+	logi = all_datas[:,3] != 0
 	
 	new_length = np.vstack([np.array(time_len), np.array(length),np.array(length) - np.array(length)[0]]).T
 	new_length[:,2] *= 1000
 	
-	return (new_all_data, new_length, fig_title)
+	return (all_datas[logi,:], new_length, fig_title)
 
 def readtxt2(path,fileform='data',data_offset=5,return_type='each'):
 	""" ==  readtxt  ==========
@@ -256,7 +225,7 @@ def readCSV(path,fileform='data'):
 	
 	return data_list
 
-def readyaml(path):
+def readyaml(path,work_name="e.max",readfunc='readtxt'):
 	'''
 
 	
@@ -280,10 +249,14 @@ def readyaml(path):
 	with open(file_yml,'r') as yml:
 		config = yaml.safe_load(yml)
 
+	#print(config)
 
 	#calculation of machining time
 	parpath = os.path.abspath( os.path.join( os.pardir ))
-	_, length,_ = readtxt2(parpath)
+	if readfunc == 'readtxt':
+		_, length,_ = readtxt(parpath)
+	elif readfunc == 'readtxt2':
+		_, length,_ = readtxt2(parpath)
 
 	#a type of machining_time variable is numpy.numpy, so machining_time has to be changed into float.
 	machining_time = round(  float(length[-1,0]) ,2 )
@@ -307,8 +280,24 @@ def readyaml(path):
 
 	start_time = config['condition']['date']['start'].strftime('%Y/%m/%d (%a)')
 	end_time = config['condition']['date']['end'].strftime('%Y/%m/%d (%a)')
+	
+	# work type is not defined
+	work_info_path = os.path.join(os.getcwd(),"py_module","workpiece_info",work_name+".yml")
+	if not os.path.isfile(work_info_path):
+		raise FileNotFoundError("work_name might be wrong word.")
+		sys.exit()
+	with open(work_info_path,'r',encoding='utf-8') as yml:
+			work_info = yaml.safe_load(yml)
+
+	
+	if not 'workpiece' in config:
+		up_to_date = False
+		config['workpiece'] = work_info
+	
+	
+	####### DISPLAY  ################
 	print(config['condition']['Nnumber'])
-	print("================================")
+	print("==========  Condition  ===============")
 	print('加工開始日：' + start_time)
 	print('加工終了日：' + end_time)
 	print('回転数：' + str( config['condition']['rotation_speed'] ) + "rpm")
@@ -318,7 +307,11 @@ def readyaml(path):
 	print('加工時間：' + str( config['condition']['machining_time'] ) + 'h')
 	print('加工のパターン：' + config['condition']['process_type'])
 	print('コメント：' + config_comment)
-
+	print("==========  Workpiece  ===============")
+	print('製品名 : ' + config['workpiece']['product_name'])
+	print('材料の種類 : ' + config['workpiece']['type'])
+	print('構成材料 : ' + str(config['workpiece']['constituent_material']))
+	
 	#if yaml file is not up_to_date, the following code will be carryed out
 	if not up_to_date:
 		#print("ok3")
