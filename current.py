@@ -3,49 +3,69 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 import sys,time
+import re
 
 
 sys_args = sys.argv
+print(sys_args)
 
-axis_max = 1800
-axis_min = 1550
+axis1_max = 2000
+axis1_min = 1300
+
+axis2_max = 1800
+axis2_min = 1550
 axix_time = "h"
+
+
+p = re.compile(r'\[[0-9.]+,[0-9.]+\]')
 
 for i,arg in enumerate(sys_args):
     #the first argument is file name, so it will not be adoptted.
     if i==0:
         continue
 
-    print(arg)
     if not "=" in arg:
         raise ValueError("the option format must be 'key'='value'.")
         sys.exit()
     
     option = arg.split('=')
     
-    
-    if option[0] == 'max':
-        try:
-            value = float(option[1])
-        except ValueError as e:
-            print("value must be the number")
+
+    if option[0] == "axis1":
+        m = p.match(option[1])
+        if m == None:
+            raise ValueError("Options are unsuported format")
             sys.exit()
-        axis_max = value
-    elif option[0] == 'min':
+            
+        splited_values = re.split('[\[\],]',m.group())
+        
         try:
-            value = float(option[1])
-        except ValueError as e:
-            print("value must be the number")
+            axis1_min = float(splited_values[1])
+            axis1_max = float(splited_values[2])
+        except TypeError as e:
+            print("TypeError: cannot convert the original value into float")
             sys.exit()
-        axis_min = value
-    elif option[0] == 'time':
-        value = option[1]
-        if not ( value == 'h' or value == 'min'):
-            raise ValueError("the value in option of time must be h or min.")
+        
+    elif option[0] == "axis2":
+        m = p.match(option[1])
+        if m == None:
+            raise ValueError("Options are unsuported format")
+            sys.exit()
+            
+        splited_values = re.split('[\[\],]',m.group())
+        
+        try:
+            axis2_min = float(splited_values[1])
+            axis2_max = float(splited_values[2])
+        except TypeError as e:
+            print("TypeError: cannot convert the original value into float")
             sys.exit()
     else:
-        raise ValueError("the option must be min,max,time")
+        raise ValueError("Options are unsuported format.")
         sys.exit()
+    
+    
+    
 
 
 
@@ -76,8 +96,7 @@ for each_data in all_data:
     sp_means.append([data[size_data//2,0],sp_mean])
 
 
-axis1_max = 2000
-axis1_min = 1300
+
 
 sp_means = np.array(sp_means)
 
@@ -97,15 +116,17 @@ for i,change_time_str in enumerate(fig_title):
 
 
 ax2.set_ylabel("Average SP current",fontsize=18)
-ax2.set_ylim(axis_min,axis_max)
+ax2.set_ylim(axis2_min,axis2_max)
 
 ax.set_xlabel("Time $t$ [h]",fontsize=18)
 ax.set_ylabel("SP current",fontsize=18)
 ax.set_ylim(axis1_min,axis1_max)
 ax.set_xlim(0,each_data[-1,0])
 
-ax.legend([line1,line2,line3],["SP current", "Average SP current","The point exchanging a workpiece"])
-
+if "line3" in locals():
+	ax.legend([line1,line2,line3],["SP current", "Average SP current","The point exchanging a workpiece"])
+else:
+	ax.legend([line1,line2],["SP current","Average SP current"])
 
 
 
