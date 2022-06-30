@@ -294,6 +294,10 @@ def readyaml(path,work_name="e.max",readfunc='readtxt'):
 		up_to_date = False
 		config['workpiece'] = work_info
 	
+	elif config['workpiece'] != work_info:
+		up_to_date = False
+		config['workpiece'] = work_info
+	
 	
 	####### DISPLAY  ################
 	print(config['condition']['Nnumber'])
@@ -309,6 +313,7 @@ def readyaml(path,work_name="e.max",readfunc='readtxt'):
 	print('コメント：' + config_comment)
 	print("==========  Workpiece  ===============")
 	print('製品名 : ' + config['workpiece']['product_name'])
+	print('会社 : ' + config['workpiece']['firm_name'])
 	print('材料の種類 : ' + config['workpiece']['type'])
 	print('構成材料 : ' + str(config['workpiece']['constituent_material']))
 	
