@@ -240,9 +240,9 @@ def readyaml(path,work_name="e.max",readfunc='readtxt'):
 		if len(files_yml) == 0:
 			try:
 				raise FileNotFoundError("yaml file was not found.")
-			except:
-				traceback.print_exc()
-				return
+			except FileNotFoundError as e:
+				print(e)
+				sys.exit("Error")
 		else:
 			file_yml = files_yml[0]
 
