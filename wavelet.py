@@ -99,7 +99,7 @@ def main():
 
     if result_type == 'log':
         dir = './image/wavelet/accomp_len/' + result_type + '/' + wavelet_type + "-" + panel_type
-        lim_max = [6,5,3]
+        lim_max = [9,5,5]
         lim_min = [-6,-6,-6]
     elif result_type == 'power':
         dir = './image/wavelet/accomp_len/' + result_type + '/' + wavelet_type + "-" + panel_type
