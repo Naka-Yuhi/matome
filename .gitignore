@@ -131,5 +131,6 @@ dmypy.json
 # matome
 /image/
 py_data/
+wavelet_list.py
 
 *.pdf

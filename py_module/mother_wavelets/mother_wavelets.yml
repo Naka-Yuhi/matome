@@ -1,0 +1,63 @@
+cgau1:
+  requirement: 0
+  result: complex
+cgau2:
+  requirement: 0
+  result: complex
+cgau3:
+  requirement: 0
+  result: complex
+cgau4:
+  requirement: 0
+  result: complex
+cgau5:
+  requirement: 0
+  result: complex
+cgau6:
+  requirement: 0
+  result: complex
+cgau7:
+  requirement: 0
+  result: complex
+cgau8:
+  requirement: 0
+  result: complex
+cmor:
+  requirement: 2
+  result: complex
+fbsp:
+  requirement: 3
+  result: complex
+gaus1:
+  requirement: 0
+  result: real
+gaus2:
+  requirement: 0
+  result: real
+gaus3:
+  requirement: 0
+  result: real
+gaus4:
+  requirement: 0
+  result: real
+gaus5:
+  requirement: 0
+  result: real
+gaus6:
+  requirement: 0
+  result: real
+gaus7:
+  requirement: 0
+  result: real
+gaus8:
+  requirement: 0
+  result: real
+mexh:
+  requirement: 0
+  result: real
+morl:
+  requirement: 0
+  result: real
+shan:
+  requirement: 2
+  result: complex
