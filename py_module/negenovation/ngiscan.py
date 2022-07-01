@@ -238,10 +238,7 @@ def readyaml(path,work_name="e.max",readfunc='readtxt'):
 	else:
 		files_yml = natsorted(glob.glob(os.path.join(path,'*.yml') ) )
 		if len(files_yml) == 0:
-			try:
-				raise FileNotFoundError("yaml file was not found.")
-			except FileNotFoundError as e:
-				print(e)
+				print("yaml file could not be found")
 				sys.exit("Error")
 		else:
 			file_yml = files_yml[0]
