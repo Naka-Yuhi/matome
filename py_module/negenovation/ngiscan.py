@@ -48,13 +48,13 @@ def readtxt(path,fileform='data',time_span=9.7):
 			#print(np.mean(data_np,axis=0))
 			#the first tool length is decided to be 0
 			
-			time_len.append( (counter_base*time_span) )
+			time_len.append( (counter_base*time_span/60) )
 			all_datas[counter_base,1:8] = np.mean(data_np,axis=0)
 			all_datas[counter_base,0] = ( ((counter_base+1)*time_span) - time_span/2 )/60 
 			
 			counter_base += 1
 
-		fig_title.append( str( round(time_len[-1]/60,1) ) + "h" )
+		fig_title.append( str( round(time_len[-1],1) ) + "h" )
 	
 	logi = all_datas[:,3] != 0
 	
